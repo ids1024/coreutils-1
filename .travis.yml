@@ -19,10 +19,19 @@ matrix:
     - rust: nightly
       os: osx
       env: FEATURES=nightly
+    - rust: nightly
+      os: linux
+      env: FEATURES=nightly,redox CC=x86_64-unknown-redox-gcc TARGET_ARG='--target=x86-64-unknown-redox' REDOX=1
 cache:
  directories:
   - $HOME/.cargo
-sudo: false
+sudo: true
+before_install:
+  - if [ $REDOX ]; then rustup target add x86_64-unknown-redox; fi
+  - if [ $REDOX ]; curl https://static.redox-os.org/toolchain/apt/keyFile | sudo apt-key add -; fi
+  - if [ $REDOX ]; echo 'deb https://static.redox-os.org/toolchain/apt' | sudo tee -a /etc/apt/sources.list; fi
+  - if [ $REDOX ]; sudo apt-get update -qq; fi
+  - if [ $REDOX ]; sudo apt-get install -y x86-64-unknown-redox-gcc; fi
 script:
-  - cargo build --features "$FEATURES"
-  - cargo test --features "$FEATURES" --no-fail-fast
+  - cargo build $TARGET_ARG --features "$FEATURES"
+  - cargo test $TARGET_ARG --features "$FEATURES" --no-fail-fast
