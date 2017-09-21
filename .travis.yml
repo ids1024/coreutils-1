@@ -27,7 +27,7 @@ cache:
   - $HOME/.cargo
 sudo: true
 before_install:
-  - if [ $REDOX ]; then ./.travis/travis-toolchain.sh; fi
+  - if [ $REDOX ]; then ./.travis/redox-toolchain.sh; fi
 script:
   - cargo build $TARGET_ARG --features "$FEATURES"
   - cargo test $TARGET_ARG --features "$FEATURES" --no-fail-fast
