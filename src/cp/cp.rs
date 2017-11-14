@@ -827,7 +827,8 @@ fn copy_directory(root: &Path, target: &Target, options: &Options) -> CopyResult
             }
         }
 
-    #[cfg(windows)]
+    // This should be changed once Redox supports hardlinks
+    #[cfg(any(windows, target_os = "redox"))]
     let mut hard_links: Vec<(String, u64)> = vec![];
 
     for path in WalkDir::new(root) {
