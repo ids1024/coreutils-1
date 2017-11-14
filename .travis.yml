@@ -30,4 +30,4 @@ before_install:
   - if [ $REDOX ]; then ./.travis/redox-toolchain.sh; fi
 script:
   - cargo build $CARGO_ARGS --features "$FEATURES"
-  - cargo test $CARGO_ARGS --features "$FEATURES" --no-fail-fast
+  - if [! $REDOX ] cargo test $CARGO_ARGS --features "$FEATURES" --no-fail-fast
