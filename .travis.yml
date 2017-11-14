@@ -21,7 +21,7 @@ matrix:
       env: FEATURES=nightly
     - rust: nightly
       os: linux
-      env: FEATURES=nightly,redox CC=x86_64-unknown-redox-gcc TARGET_ARG='--target=x86-64-unknown-redox' REDOX=1
+      env: FEATURES=nightly,redox CC=x86_64-unknown-redox-gcc TARGET_ARG='--target=x86_64-unknown-redox' REDOX=1
 cache:
  directories:
   - $HOME/.cargo
